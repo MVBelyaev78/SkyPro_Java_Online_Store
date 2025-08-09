@@ -30,13 +30,14 @@ public class DiscountedProduct extends Product {
         this.discountPercent = discountPercent;
     }
 
+    @Override
     public Integer getPrice() {
         return basePrice * (100 - discountPercent) / 100;
     }
 
     @Override
     public String toString() {
-        return String.format("%s: %s, %s%%", name, basePrice, discountPercent);
+        return String.format("%s: %s (%s%%)", name, basePrice, discountPercent);
     }
 
     private void checkDiscountPercent(Integer discountPercent) {

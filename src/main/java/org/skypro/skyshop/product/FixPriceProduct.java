@@ -7,12 +7,13 @@ public class FixPriceProduct extends Product {
         super(name);
     }
 
+    @Override
     public Integer getPrice() {
         return FIX_PRICE;
     }
 
     @Override
     public String toString() {
-        return String.format("%s: %s", name, FIX_PRICE);
+        return String.format("%s: Фиксированная цена %s", name, FIX_PRICE);
     }
 }
