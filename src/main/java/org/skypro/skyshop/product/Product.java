@@ -5,7 +5,7 @@ import java.util.Objects;
 public abstract class Product {
     protected final String name;
 
-    public Product(String name) {
+    protected Product(String name) {
         this.name = name;
     }
 
