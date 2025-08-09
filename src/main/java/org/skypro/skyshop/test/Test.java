@@ -2,12 +2,13 @@ package org.skypro.skyshop.test;
 
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
 
 public class Test {
     private final ProductBasket productBasket = new ProductBasket("Mikhail");
     private final Product[] testCase = {
-            new Product("Pier", 150),
-            new Product("Mango", 1100)
+            new SimpleProduct("Pier", 150),
+            new SimpleProduct("Mango", 1100)
     };
 
     public Test() {
@@ -45,15 +46,15 @@ public class Test {
     }
 
     private void fillBasket() {
-        productBasket.addProduct(new Product("Grape", 450));
-        productBasket.addProduct(new Product("Sweet cherry", 900));
-        productBasket.addProduct(new Product("Peach", 500));
-        productBasket.addProduct(new Product("Apple", 250));
-        productBasket.addProduct(new Product("Pier", 550));
-        productBasket.addProduct(new Product("Tomato", 300));
-        productBasket.addProduct(new Product("Cucumber", 200));
-        productBasket.addProduct(new Product("Potato", 100));
-        productBasket.addProduct(new Product("Sweet potato", 500));
+        productBasket.addProduct(new SimpleProduct("Grape", 450));
+        productBasket.addProduct(new SimpleProduct("Sweet cherry", 900));
+        productBasket.addProduct(new SimpleProduct("Peach", 500));
+        productBasket.addProduct(new SimpleProduct("Apple", 250));
+        productBasket.addProduct(new SimpleProduct("Pier", 550));
+        productBasket.addProduct(new SimpleProduct("Tomato", 300));
+        productBasket.addProduct(new SimpleProduct("Cucumber", 200));
+        productBasket.addProduct(new SimpleProduct("Potato", 100));
+        productBasket.addProduct(new SimpleProduct("Sweet potato", 500));
     }
 
     private void clearBasket() {

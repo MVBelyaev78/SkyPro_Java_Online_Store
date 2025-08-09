@@ -43,7 +43,7 @@ public class ProductBasket {
     public Integer getProductsCost() {
         return products
                 .stream()
-                .map(Product::getCost)
+                .map(Product::getPrice)
                 .reduce(0, Integer::sum);
     }
 
