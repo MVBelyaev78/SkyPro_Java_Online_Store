@@ -14,8 +14,8 @@ import java.util.List;
 public class Test {
     private final ProductBasket productBasket = new ProductBasket("Mikhail");
     private final Product[] testCaseBasket = {
-            new SimpleProduct("Pier", 150),
-            new DiscountedProduct("Pier", 150, 25),
+            new SimpleProduct("Pear", 150),
+            new DiscountedProduct("Pear", 150, 25),
             new SimpleProduct("Mango", 1100)
     };
     private final List<Article> articles = new ArrayList<>();
@@ -82,7 +82,7 @@ public class Test {
         productBasket.addProduct(new SimpleProduct("Sweet cherry", 900));
         productBasket.addProduct(new SimpleProduct("Peach", 500));
         productBasket.addProduct(new DiscountedProduct("Apple", 250, 35));
-        productBasket.addProduct(new DiscountedProduct("Pier", 550, 0));
+        productBasket.addProduct(new DiscountedProduct("Pear", 550, 0));
         productBasket.addProduct(new DiscountedProduct("Tomato", 300, 70));
         productBasket.addProduct(new FixPriceProduct("Cucumber"));
         productBasket.addProduct(new FixPriceProduct("Potato"));

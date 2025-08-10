@@ -8,7 +8,6 @@ public final class SimpleProduct extends Product {
         this.price = price;
     }
 
-    @Override
     public Integer getPrice() {
         return price;
     }
@@ -22,7 +21,6 @@ public final class SimpleProduct extends Product {
         return String.format("%s: %s", name, price);
     }
 
-    @Override
     public Boolean isSpecial() {
         return false;
     }
