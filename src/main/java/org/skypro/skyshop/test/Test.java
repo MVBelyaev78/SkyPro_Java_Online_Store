@@ -10,6 +10,7 @@ public class Test {
     private final ProductBasket productBasket = new ProductBasket("Mikhail");
     private final Product[] testCase = {
             new SimpleProduct("Pier", 150),
+            new DiscountedProduct("Pier", 150, 25),
             new SimpleProduct("Mango", 1100)
     };
 

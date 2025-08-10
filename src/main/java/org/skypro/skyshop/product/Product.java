@@ -20,7 +20,7 @@ public abstract class Product {
         if (this == object) {
             return true;
         }
-        if (object == null || getClass().getSuperclass() != object.getClass().getSuperclass()) {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
         final Product that = (Product) object;
