@@ -2,7 +2,7 @@ package org.skypro.skyshop.product;
 
 import org.skypro.skyshop.exceptions.IllegalPercentException;
 
-public class DiscountedProduct extends Product {
+public final class DiscountedProduct extends Product {
     private Integer basePrice;
     private Integer discountPercent;
 
