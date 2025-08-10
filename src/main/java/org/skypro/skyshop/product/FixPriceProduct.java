@@ -7,7 +7,6 @@ public final class FixPriceProduct extends Product {
         super(name);
     }
 
-    @Override
     public Integer getPrice() {
         return FIX_PRICE;
     }
@@ -17,7 +16,6 @@ public final class FixPriceProduct extends Product {
         return String.format("%s: Фиксированная цена %s", name, FIX_PRICE);
     }
 
-    @Override
     public Boolean isSpecial() {
         return true;
     }
