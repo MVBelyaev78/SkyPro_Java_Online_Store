@@ -30,6 +30,7 @@ public class ProductBasket {
                 .collect(Collectors.joining("\n"));
         if (!products.isEmpty()) {
             result += String.format("\nИтого: %s", getProductsCost());
+            result += String.format("\nСпециальных товаров: %s", getSpecialProductsCount());
         } else {
             result = "в корзине пусто";
         }
@@ -43,8 +44,15 @@ public class ProductBasket {
     public Integer getProductsCost() {
         return products
                 .stream()
-                .map(Product::getCost)
+                .map(Product::getPrice)
                 .reduce(0, Integer::sum);
+    }
+
+    public Long getSpecialProductsCount() {
+        return products
+                .stream()
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public boolean checkProductInBasket(Product product) {
