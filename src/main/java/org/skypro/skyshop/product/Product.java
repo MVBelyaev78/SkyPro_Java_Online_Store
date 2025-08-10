@@ -20,7 +20,7 @@ public abstract class Product {
         if (this == object) {
             return true;
         }
-        if (object == null || getClass() != object.getClass()) {
+        if (object == null || getClass().getSuperclass() != object.getClass().getSuperclass()) {
             return false;
         }
         final Product that = (Product) object;
@@ -34,4 +34,6 @@ public abstract class Product {
 
     @Override
     public abstract String toString();
+
+    public abstract Boolean isSpecial();
 }

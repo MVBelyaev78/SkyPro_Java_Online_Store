@@ -40,6 +40,11 @@ public class DiscountedProduct extends Product {
         return String.format("%s: %s (%s%%)", name, basePrice, discountPercent);
     }
 
+    @Override
+    public Boolean isSpecial() {
+        return true;
+    }
+
     private void checkDiscountPercent(Integer discountPercent) {
         if (discountPercent < 0 || discountPercent >= 100) {
             throw new IllegalPercentException();

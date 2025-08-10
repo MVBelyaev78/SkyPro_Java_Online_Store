@@ -16,4 +16,9 @@ public class FixPriceProduct extends Product {
     public String toString() {
         return String.format("%s: Фиксированная цена %s", name, FIX_PRICE);
     }
+
+    @Override
+    public Boolean isSpecial() {
+        return true;
+    }
 }

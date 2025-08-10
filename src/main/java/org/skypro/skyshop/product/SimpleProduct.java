@@ -21,4 +21,9 @@ public class SimpleProduct extends Product {
     public String toString() {
         return String.format("%s: %s", name, price);
     }
+
+    @Override
+    public Boolean isSpecial() {
+        return false;
+    }
 }

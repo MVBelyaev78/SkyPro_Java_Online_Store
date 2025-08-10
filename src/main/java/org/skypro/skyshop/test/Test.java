@@ -1,6 +1,8 @@
 package org.skypro.skyshop.test;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 
@@ -49,12 +51,12 @@ public class Test {
         productBasket.addProduct(new SimpleProduct("Grape", 450));
         productBasket.addProduct(new SimpleProduct("Sweet cherry", 900));
         productBasket.addProduct(new SimpleProduct("Peach", 500));
-        productBasket.addProduct(new SimpleProduct("Apple", 250));
-        productBasket.addProduct(new SimpleProduct("Pier", 550));
-        productBasket.addProduct(new SimpleProduct("Tomato", 300));
-        productBasket.addProduct(new SimpleProduct("Cucumber", 200));
-        productBasket.addProduct(new SimpleProduct("Potato", 100));
-        productBasket.addProduct(new SimpleProduct("Sweet potato", 500));
+        productBasket.addProduct(new DiscountedProduct("Apple", 250, 35));
+        productBasket.addProduct(new DiscountedProduct("Pier", 550, 0));
+        productBasket.addProduct(new DiscountedProduct("Tomato", 300, 70));
+        productBasket.addProduct(new FixPriceProduct("Cucumber"));
+        productBasket.addProduct(new FixPriceProduct("Potato"));
+        productBasket.addProduct(new FixPriceProduct("Sweet potato"));
     }
 
     private void clearBasket() {
