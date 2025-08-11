@@ -5,7 +5,7 @@ public final class SimpleProduct extends Product {
 
     public SimpleProduct(String name, Integer price) {
         super(name);
-        this.price = price;
+        setPrice(price);
     }
 
     public Integer getPrice() {
@@ -13,6 +13,9 @@ public final class SimpleProduct extends Product {
     }
 
     public void setPrice(Integer price) {
+        if (price == null || price <= 0) {
+            throw new IllegalArgumentException("Invalid input: price cannot be equal or less than zero");
+        }
         this.price = price;
     }
 

@@ -2,11 +2,13 @@ package org.skypro.skyshop.test;
 
 import org.skypro.skyshop.articles.Article;
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.exceptions.BestSuitedNotFound;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class Test {
             "singing",
             "apple",
             "yesterday",
-            "lately thinking",
+            "thinking",
             "I don't know she wouldn't say",
             "Grape",
             "unknown qwerty",
@@ -43,7 +45,7 @@ public class Test {
 
     private void runTestSuite1() {
         System.out.println("------------------------------");
-        System.out.println("        Пустая корзина        ");
+        System.out.println("         Empty basket         ");
         System.out.println("------------------------------");
         clearBasket();
         runAllCases();
@@ -51,7 +53,7 @@ public class Test {
 
     private void runTestSuite2() {
         System.out.println("------------------------------");
-        System.out.println("     Заполненная корзина      ");
+        System.out.println("        Filled basket         ");
         System.out.println("------------------------------");
         fillBasket();
         runAllCases();
@@ -59,12 +61,15 @@ public class Test {
 
     private void runTestSuite3() {
         System.out.println("------------------------------");
-        System.out.println("        Поисковый движок      ");
+        System.out.println("        Search Engine         ");
         System.out.println("------------------------------");
         fillArticlesList();
         fillProductsList();
         fillSearchEngine();
         useSearchEngine();
+        System.out.println("------------------------------");
+        useSearchEngineBestSuited();
+
     }
 
     private void runAllCases() {
@@ -77,20 +82,50 @@ public class Test {
         System.out.println();
     }
 
-    private void fillBasket() {
-        productBasket.addProduct(new SimpleProduct("Grape", 450));
-        productBasket.addProduct(new SimpleProduct("Sweet cherry", 900));
-        productBasket.addProduct(new SimpleProduct("Peach", 500));
-        productBasket.addProduct(new DiscountedProduct("Apple", 250, 35));
-        productBasket.addProduct(new DiscountedProduct("Pear", 550, 0));
-        productBasket.addProduct(new DiscountedProduct("Tomato", 300, 70));
-        productBasket.addProduct(new FixPriceProduct("Cucumber"));
-        productBasket.addProduct(new FixPriceProduct("Potato"));
-        productBasket.addProduct(new FixPriceProduct("Sweet potato"));
-    }
-
     private void clearBasket() {
         productBasket.clear();
+    }
+
+    private void fillBasket() {
+        addSimpleProduct("Grape", 450);
+        addSimpleProduct("Sweet cherry", 900);
+        addSimpleProduct("Peach", 500);
+        addSimpleProduct("   ", 200);
+        addSimpleProduct("test", -100);
+        addDiscountedProduct("Apple", 250, 35);
+        addDiscountedProduct("Pear", 550, 0);
+        addDiscountedProduct("Tomato", 300, 70);
+        addDiscountedProduct("", 30, 30);
+        addDiscountedProduct("test", 0, 30);
+        addDiscountedProduct("test", 30, -30);
+        addFixPriceProduct("Cucumber");
+        addFixPriceProduct("Potato");
+        addFixPriceProduct("Sweet potato");
+        addFixPriceProduct("  ");
+    }
+
+    private void addSimpleProduct(String name, Integer price) {
+        try {
+            productBasket.addProduct(new SimpleProduct(name, price));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void addDiscountedProduct(String name, Integer basePrice, Integer discountPercent) {
+        try {
+            productBasket.addProduct(new DiscountedProduct(name, basePrice, discountPercent));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void addFixPriceProduct(String name) {
+        try {
+            productBasket.addProduct(new FixPriceProduct(name));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void printBasket() {
@@ -117,23 +152,16 @@ public class Test {
         }
     }
 
-    private void useSearchEngine() {
-        for (String str : testCaseSearchEngine) {
-            searchEngine.search(str).forEach(System.out::println);
-        }
-    }
-
-    private void fillSearchEngine() {
-        articles.forEach(searchEngine::add);
-        products.forEach(searchEngine::add);
-    }
-
     private void fillArticlesList() {
-        articles.add(new Article("Yesterday", 
+        articles.add(new Article("Yesterday",
                 "Why she had to go I don't know she wouldn't say"));
-        articles.add(new Article("Thank You for the Music", 
+        articles.add(new Article("My own ideas",
+                "Yesterday was yesterday and today is today. Thinking a lot means thinking the best"));
+        articles.add(new Article("Thank You for the Music",
                 "I began singing before I could talk"));
-        articles.add(new Article("Poems, Prayers and Promises", 
+        articles.add(new Article("Sign singing",
+                "Sign singing or Karaoke signing is singing using sign language"));
+        articles.add(new Article("Poems, Prayers and Promises",
                 "I've been lately thinking about my life's time"));
     }
 
@@ -141,5 +169,30 @@ public class Test {
         products.add(new SimpleProduct("Grape", 450));
         products.add(new DiscountedProduct("Apple", 250, 35));
         products.add(new FixPriceProduct("Cucumber"));
+    }
+
+    private void fillSearchEngine() {
+        articles.forEach(searchEngine::add);
+        products.forEach(searchEngine::add);
+    }
+
+    private void useSearchEngine() {
+        for (String str : testCaseSearchEngine) {
+            searchEngine
+                    .search(str)
+                    .stream()
+                    .map(Searchable::getStringRepresentation)
+                    .forEach(stringRepresentation -> System.out.printf("\"%s\" : %s%n", str, stringRepresentation));
+        }
+    }
+
+    private void useSearchEngineBestSuited() {
+        for (String str : testCaseSearchEngine) {
+            try {
+                System.out.printf("\"%s\" : %s%n", str, searchEngine.searchBestSuited(str).getStringRepresentation());
+            } catch (BestSuitedNotFound e) {
+                System.out.printf("\"%s\" : %s%n", str, e.getMessage());
+            }
+        }
     }
 }
