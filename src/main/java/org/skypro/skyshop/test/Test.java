@@ -2,11 +2,13 @@ package org.skypro.skyshop.test;
 
 import org.skypro.skyshop.articles.Article;
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.exceptions.BestSuitedNotFound;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class Test {
             "singing",
             "apple",
             "yesterday",
-            "lately thinking",
+            "thinking",
             "I don't know she wouldn't say",
             "Grape",
             "unknown qwerty",
@@ -65,6 +67,9 @@ public class Test {
         fillProductsList();
         fillSearchEngine();
         useSearchEngine();
+        System.out.println("------------------------------");
+        useSearchEngineBestSuited();
+
     }
 
     private void runAllCases() {
@@ -147,23 +152,16 @@ public class Test {
         }
     }
 
-    private void useSearchEngine() {
-        for (String str : testCaseSearchEngine) {
-            searchEngine.search(str).forEach(System.out::println);
-        }
-    }
-
-    private void fillSearchEngine() {
-        articles.forEach(searchEngine::add);
-        products.forEach(searchEngine::add);
-    }
-
     private void fillArticlesList() {
-        articles.add(new Article("Yesterday", 
+        articles.add(new Article("Yesterday",
                 "Why she had to go I don't know she wouldn't say"));
-        articles.add(new Article("Thank You for the Music", 
+        articles.add(new Article("My own ideas",
+                "Yesterday was yesterday and today is today. Thinking a lot means thinking the best"));
+        articles.add(new Article("Thank You for the Music",
                 "I began singing before I could talk"));
-        articles.add(new Article("Poems, Prayers and Promises", 
+        articles.add(new Article("Sign singing",
+                "Sign singing or Karaoke signing is singing using sign language"));
+        articles.add(new Article("Poems, Prayers and Promises",
                 "I've been lately thinking about my life's time"));
     }
 
@@ -171,5 +169,30 @@ public class Test {
         products.add(new SimpleProduct("Grape", 450));
         products.add(new DiscountedProduct("Apple", 250, 35));
         products.add(new FixPriceProduct("Cucumber"));
+    }
+
+    private void fillSearchEngine() {
+        articles.forEach(searchEngine::add);
+        products.forEach(searchEngine::add);
+    }
+
+    private void useSearchEngine() {
+        for (String str : testCaseSearchEngine) {
+            searchEngine
+                    .search(str)
+                    .stream()
+                    .map(Searchable::getStringRepresentation)
+                    .forEach(stringRepresentation -> System.out.printf("\"%s\" : %s%n", str, stringRepresentation));
+        }
+    }
+
+    private void useSearchEngineBestSuited() {
+        for (String str : testCaseSearchEngine) {
+            try {
+                System.out.printf("\"%s\" : %s%n", str, searchEngine.searchBestSuited(str).getStringRepresentation());
+            } catch (BestSuitedNotFound e) {
+                System.out.printf("\"%s\" : %s%n", str, e.getMessage());
+            }
+        }
     }
 }
