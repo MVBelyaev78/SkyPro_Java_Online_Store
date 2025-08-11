@@ -1,16 +1,13 @@
 package org.skypro.skyshop.product;
 
-import org.skypro.skyshop.exceptions.IllegalPercentException;
-
 public final class DiscountedProduct extends Product {
     private Integer basePrice;
     private Integer discountPercent;
 
     public DiscountedProduct(String name, Integer basePrice, Integer discountPercent) {
         super(name);
-        this.basePrice = basePrice;
-        checkDiscountPercent(discountPercent);
-        this.discountPercent = discountPercent;
+        setBasePrice(basePrice);
+        setDiscountPercent(discountPercent);
     }
 
     public Integer getBasePrice() {
@@ -18,6 +15,9 @@ public final class DiscountedProduct extends Product {
     }
 
     public void setBasePrice(Integer basePrice) {
+        if (basePrice == null || basePrice <= 0) {
+            throw new IllegalArgumentException("Invalid input: base price cannot be equal or less than zero");
+        }
         this.basePrice = basePrice;
     }
 
@@ -26,7 +26,9 @@ public final class DiscountedProduct extends Product {
     }
 
     public void setDiscountPercent(Integer discountPercent) {
-        checkDiscountPercent(discountPercent);
+        if (discountPercent == null || discountPercent < 0 || discountPercent > 100) {
+            throw new IllegalArgumentException("Invalid input: discount percent must be between 0 and 100");
+        }
         this.discountPercent = discountPercent;
     }
 
@@ -41,11 +43,5 @@ public final class DiscountedProduct extends Product {
 
     public Boolean isSpecial() {
         return true;
-    }
-
-    private void checkDiscountPercent(Integer discountPercent) {
-        if (discountPercent < 0 || discountPercent >= 100) {
-            throw new IllegalPercentException();
-        }
     }
 }

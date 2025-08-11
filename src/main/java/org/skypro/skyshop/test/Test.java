@@ -43,7 +43,7 @@ public class Test {
 
     private void runTestSuite1() {
         System.out.println("------------------------------");
-        System.out.println("        Пустая корзина        ");
+        System.out.println("         Empty basket         ");
         System.out.println("------------------------------");
         clearBasket();
         runAllCases();
@@ -51,7 +51,7 @@ public class Test {
 
     private void runTestSuite2() {
         System.out.println("------------------------------");
-        System.out.println("     Заполненная корзина      ");
+        System.out.println("        Filled basket         ");
         System.out.println("------------------------------");
         fillBasket();
         runAllCases();
@@ -59,7 +59,7 @@ public class Test {
 
     private void runTestSuite3() {
         System.out.println("------------------------------");
-        System.out.println("        Поисковый движок      ");
+        System.out.println("        Search Engine         ");
         System.out.println("------------------------------");
         fillArticlesList();
         fillProductsList();
@@ -77,20 +77,50 @@ public class Test {
         System.out.println();
     }
 
-    private void fillBasket() {
-        productBasket.addProduct(new SimpleProduct("Grape", 450));
-        productBasket.addProduct(new SimpleProduct("Sweet cherry", 900));
-        productBasket.addProduct(new SimpleProduct("Peach", 500));
-        productBasket.addProduct(new DiscountedProduct("Apple", 250, 35));
-        productBasket.addProduct(new DiscountedProduct("Pear", 550, 0));
-        productBasket.addProduct(new DiscountedProduct("Tomato", 300, 70));
-        productBasket.addProduct(new FixPriceProduct("Cucumber"));
-        productBasket.addProduct(new FixPriceProduct("Potato"));
-        productBasket.addProduct(new FixPriceProduct("Sweet potato"));
-    }
-
     private void clearBasket() {
         productBasket.clear();
+    }
+
+    private void fillBasket() {
+        addSimpleProduct("Grape", 450);
+        addSimpleProduct("Sweet cherry", 900);
+        addSimpleProduct("Peach", 500);
+        addSimpleProduct("   ", 200);
+        addSimpleProduct("test", -100);
+        addDiscountedProduct("Apple", 250, 35);
+        addDiscountedProduct("Pear", 550, 0);
+        addDiscountedProduct("Tomato", 300, 70);
+        addDiscountedProduct("", 30, 30);
+        addDiscountedProduct("test", 0, 30);
+        addDiscountedProduct("test", 30, -30);
+        addFixPriceProduct("Cucumber");
+        addFixPriceProduct("Potato");
+        addFixPriceProduct("Sweet potato");
+        addFixPriceProduct("  ");
+    }
+
+    private void addSimpleProduct(String name, Integer price) {
+        try {
+            productBasket.addProduct(new SimpleProduct(name, price));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void addDiscountedProduct(String name, Integer basePrice, Integer discountPercent) {
+        try {
+            productBasket.addProduct(new DiscountedProduct(name, basePrice, discountPercent));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void addFixPriceProduct(String name) {
+        try {
+            productBasket.addProduct(new FixPriceProduct(name));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void printBasket() {

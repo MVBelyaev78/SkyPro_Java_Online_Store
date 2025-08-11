@@ -5,14 +5,21 @@ import org.skypro.skyshop.search.Searchable;
 import java.util.Objects;
 
 public abstract class Product implements Searchable {
-    protected final String name;
+    protected String name;
 
     protected Product(String name) {
-        this.name = name;
+        setName(name);
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Invalid input: product name cannot be empty");
+        }
+        this.name = name;
     }
 
     public abstract Integer getPrice();
