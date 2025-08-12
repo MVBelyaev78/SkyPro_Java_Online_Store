@@ -15,15 +15,16 @@ import java.util.List;
 
 public class Test {
     private final ProductBasket productBasket = new ProductBasket("Mikhail");
-    private final Product[] testCaseBasket = {
+    private final List<Product> testCaseBasket =  List.of(
             new SimpleProduct("Pear", 150),
             new DiscountedProduct("Pear", 150, 25),
             new SimpleProduct("Mango", 1100)
-    };
+    );
+    private final List<String> testCaseDeleteProducts = List.of("apple", "Grape", "unknown qwerty");
     private final List<Article> articles = new ArrayList<>();
     private final List<Product> products = new ArrayList<>();
     private final SearchEngine searchEngine = new SearchEngine();
-    private final String[] testCaseSearchEngine = {
+    private final List<String> testCaseSearchEngine = List.of(
             "singing",
             "apple",
             "yesterday",
@@ -32,7 +33,7 @@ public class Test {
             "Grape",
             "unknown qwerty",
             "unknown asdfgh"
-    };
+    );
 
     public Test() {
     }
@@ -80,6 +81,7 @@ public class Test {
         printFindProducts();
         printFindProductsByName();
         System.out.println();
+        printResultsOfDeleteProducts();
     }
 
     private void clearBasket() {
@@ -150,6 +152,13 @@ public class Test {
                     product.getName(),
                     productBasket.checkProductByNameInBasket(product.getName()));
         }
+    }
+
+    private void printResultsOfDeleteProducts() {
+        System.out.println("---- deleted products ----");
+        productBasket.deleteProducts(testCaseDeleteProducts).forEach(System.out::println);
+        System.out.println("---- result in basket ----");
+        System.out.println(productBasket);
     }
 
     private void fillArticlesList() {
