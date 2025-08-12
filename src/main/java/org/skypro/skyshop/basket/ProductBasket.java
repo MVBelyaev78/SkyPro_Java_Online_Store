@@ -3,7 +3,9 @@ package org.skypro.skyshop.basket;
 import org.skypro.skyshop.product.Product;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ProductBasket {
@@ -29,8 +31,8 @@ public class ProductBasket {
                 .map(Product::toString)
                 .collect(Collectors.joining("\n"));
         if (!products.isEmpty()) {
-            result += String.format("\nИтого: %s", getProductsCost());
-            result += String.format("\nСпециальных товаров: %s", getSpecialProductsCount());
+            result += String.format("%nИтого: %s", getProductsCost());
+            result += String.format("%nСпециальных товаров: %s", getSpecialProductsCount());
         } else {
             result = "в корзине пусто";
         }
@@ -39,6 +41,17 @@ public class ProductBasket {
 
     public void addProduct(Product product) {
         products.add(product);
+    }
+
+    public List<Product> deleteProducts(List<String> productNamesToDelete) {
+        List<Product> resultList = new ArrayList<>();
+        products.forEach(product1 -> productNamesToDelete
+                .stream()
+                .filter(prDel -> Objects.equals(product1.getName().toLowerCase(), prDel.toLowerCase()))
+                .map(prDel -> product1)
+                .forEach(resultList::add));
+        resultList.forEach(product -> products.removeIf(p -> p.equals(product)));
+        return resultList;
     }
 
     public Integer getProductsCost() {
